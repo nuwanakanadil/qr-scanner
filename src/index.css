@@ -1,0 +1,28 @@
+/* @import url() FONT IMPORTS MUST ALWAYS BE AT THE VERY TOP OF THIS FILE, ABOVE THE TAILWIND IMPORTS — DO NOT DELETE THIS COMMENT */
+
+/* CRITICAL: THE FOLLOWING TAILWIND IMPORTS MUST NEVER BE DELETED OR REORDERED — DO NOT DELETE THIS COMMENT */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* END TAILWIND IMPORTS — ALL OTHER CSS MUST GO BELOW THIS LINE */
+
+.scanner-reader,
+.scanner-reader > div,
+.scanner-reader #student-qr-reader__scan_region {
+  width: 100% !important;
+  height: 100% !important;
+  border: 0 !important;
+}
+
+.scanner-reader video,
+.scanner-reader canvas {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  border-radius: 1rem !important;
+}
+
+.scanner-reader img {
+  display: none !important;
+}
