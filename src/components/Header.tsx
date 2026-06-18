@@ -13,7 +13,7 @@ export function Header() {
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-lg font-bold text-slate-900 sm:text-xl">
-                QR Data Collector
+                QR Data Hub
               </h1>
               <GraduationCap className="hidden h-5 w-5 text-indigo-600 sm:block" />
             </div>
