@@ -223,7 +223,7 @@ export function ScannerCard({ status, onQrScan, onErrorMessage }: ScannerCardPro
   return (
     <div className="w-full max-w-2xl overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-xl shadow-slate-200/60">
       <div className="border-b border-slate-100 p-6 text-center">
-        <h2 className="text-2xl font-bold text-slate-900">Scan Student QR</h2>
+        <h2 className="text-2xl font-bold text-slate-900">Scan QR</h2>
         <p className="mt-1 text-sm text-slate-500">Use the compact QR format for better scanning</p>
       </div>
 

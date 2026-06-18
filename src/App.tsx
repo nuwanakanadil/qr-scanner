@@ -135,7 +135,7 @@ export function App() {
       </main>
 
       <footer className="border-t border-slate-200 bg-white px-4 py-3 text-center text-xs text-slate-500">
-        Records are saved row by row to the Google Sheet.
+        Made by Agas Rashmitha.
       </footer>
 
       <ConfirmDetailsModal
