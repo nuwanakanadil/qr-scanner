@@ -135,7 +135,7 @@ export function App() {
       </main>
 
       <footer className="border-t border-slate-200 bg-white px-4 py-3 text-center text-xs text-slate-500">
-        Made by Agas Rashmitha.
+        &copy; 2026 Agas Rashmitha. All rights reserved.
       </footer>
 
       <ConfirmDetailsModal
