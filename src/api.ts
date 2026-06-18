@@ -1,44 +1,43 @@
 import { ScanRecord, Student } from './types';
 
-export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const APPS_SCRIPT_URL = import.meta.env.VITE_APPS_SCRIPT_URL as string;
+const GOOGLE_SHEET_URL = import.meta.env.VITE_GOOGLE_SHEET_URL as string;
 
-export interface SaveScanPayload extends Student {
-  scanReference: string;
-  notes: string;
-}
+export type SaveScanPayload = Student & {
+  notes?: string;
+  scanReference?: string;
+};
 
-export async function saveScan(payload: SaveScanPayload): Promise<ScanRecord> {
-  const response = await fetch(`${API_BASE_URL}/api/scans`, {
+export async function saveScan(payload: SaveScanPayload) {
+  if (!APPS_SCRIPT_URL) {
+    throw new Error('Missing VITE_APPS_SCRIPT_URL in .env file');
+  }
+
+  await fetch(APPS_SCRIPT_URL, {
     method: 'POST',
+    mode: 'no-cors',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'text/plain;charset=utf-8'
     },
     body: JSON.stringify(payload)
   });
 
-  const result = await response.json();
-
-  if (!response.ok || !result.success) {
-    throw new Error(result.message || 'Failed to save scan');
-  }
-
-  return result.record;
+  return {
+    success: true,
+    message: 'Record sent to Google Sheet'
+  };
 }
 
-export async function getRecentScans(): Promise<{ total: number; records: ScanRecord[] }> {
-  const response = await fetch(`${API_BASE_URL}/api/scans?limit=20`);
-  const result = await response.json();
-
-  if (!response.ok || !result.success) {
-    throw new Error(result.message || 'Failed to load records');
-  }
-
+export async function getRecentScans(): Promise<{
+  records: ScanRecord[];
+  total: number;
+}> {
   return {
-    total: result.total,
-    records: result.records
+    records: [],
+    total: 0
   };
 }
 
 export function getExcelDownloadUrl(): string {
-  return `${API_BASE_URL}/api/scans/download`;
+  return GOOGLE_SHEET_URL || '#';
 }
