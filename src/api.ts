@@ -1,4 +1,4 @@
-import { ScanRecord, Student } from './types';
+import { Student } from './types';
 
 const APPS_SCRIPT_URL = import.meta.env.VITE_APPS_SCRIPT_URL as string;
 const GOOGLE_SHEET_URL = import.meta.env.VITE_GOOGLE_SHEET_URL as string;
@@ -28,16 +28,11 @@ export async function saveScan(payload: SaveScanPayload) {
   };
 }
 
-export async function getRecentScans(): Promise<{
-  records: ScanRecord[];
-  total: number;
-}> {
-  return {
-    records: [],
-    total: 0
-  };
-}
+export function openGoogleSheet() {
+  if (!GOOGLE_SHEET_URL) {
+    window.alert('Missing VITE_GOOGLE_SHEET_URL in .env file');
+    return;
+  }
 
-export function getExcelDownloadUrl(): string {
-  return GOOGLE_SHEET_URL || '#';
+  window.open(GOOGLE_SHEET_URL, '_blank', 'noopener,noreferrer');
 }
