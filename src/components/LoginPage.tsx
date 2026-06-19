@@ -25,7 +25,7 @@ export function LoginPage({ errorMessage, onLogin }: LoginPageProps) {
           <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10">
             <QrCode className="h-7 w-7" />
           </div>
-          <h1 className="mt-6 text-3xl font-bold">QR Student Collector</h1>
+          <h1 className="mt-6 text-3xl font-bold">QR Data Hub</h1>
           <p className="mt-3 text-sm text-slate-300">
             Sign in before accessing the QR scanner and Google Sheets workflow.
           </p>
