@@ -4,6 +4,7 @@ import { saveScan } from './api';
 import { ConfirmDetailsModal } from './components/ConfirmDetailsModal';
 import { ErrorCard } from './components/ErrorCard';
 import { Header } from './components/Header';
+import { LoginPage } from './components/LoginPage';
 import { QRCodeGenerator } from './components/QRCodeGenerator';
 import { ScannerCard } from './components/ScannerCard';
 import { SuccessCard } from './components/SuccessCard';
@@ -13,9 +14,15 @@ import { useScreenInit } from './useScreenInit';
 
 type AppState = 'scan' | 'success' | 'error';
 
+const LOGIN_STATE_STORAGE_KEY = 'qr-student-collector-authenticated';
+
 export function App() {
   useScreenInit();
 
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    () => window.localStorage.getItem(LOGIN_STATE_STORAGE_KEY) === 'true'
+  );
+  const [authError, setAuthError] = useState('');
   const [appState, setAppState] = useState<AppState>('scan');
   const [scanStatus, setScanStatus] = useState<ScanStatus>('idle');
   const [scannedStudent, setScannedStudent] = useState<Student | null>(null);
@@ -92,9 +99,40 @@ export function App() {
     }
   };
 
+  const handleLogin = ({ password, username }: { username: string; password: string }) => {
+    const expectedUsername = import.meta.env.VITE_LOGIN_USERNAME;
+    const expectedPassword = import.meta.env.VITE_LOGIN_PASSWORD;
+
+    if (!expectedUsername || !expectedPassword) {
+      setAuthError('Missing VITE_LOGIN_USERNAME or VITE_LOGIN_PASSWORD in your Vercel/Vite environment.');
+      return;
+    }
+
+    if (username !== expectedUsername || password !== expectedPassword) {
+      setAuthError('Invalid username or password.');
+      return;
+    }
+
+    window.localStorage.setItem(LOGIN_STATE_STORAGE_KEY, 'true');
+    setAuthError('');
+    setIsAuthenticated(true);
+    resetScanner();
+  };
+
+  const handleLogout = () => {
+    window.localStorage.clear();
+    setAuthError('');
+    setIsAuthenticated(false);
+    resetScanner();
+  };
+
+  if (!isAuthenticated) {
+    return <LoginPage errorMessage={authError} onLogin={handleLogin} />;
+  }
+
   return (
     <div className="flex min-h-screen flex-col bg-slate-50 font-sans text-slate-900">
-      <Header />
+      <Header onLogout={handleLogout} />
 
       <main className="flex flex-1 items-center justify-center p-4 md:p-6">
         {appState === 'scan' && (
@@ -125,7 +163,9 @@ export function App() {
         {appState === 'success' && (
           <SuccessCard
             onScanAnother={resetScanner}
-            onViewRecords={() => window.open(import.meta.env.VITE_GOOGLE_SHEET_URL, '_blank', 'noopener,noreferrer')}
+            onViewRecords={() =>
+              window.open(import.meta.env.VITE_GOOGLE_SHEET_URL, '_blank', 'noopener,noreferrer')
+            }
           />
         )}
 

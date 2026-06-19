@@ -1,15 +1,15 @@
 # QR Student Data Collector
 
-This project contains a complete frontend + backend system.
+This project is a Vite frontend for scanning student QR codes, reviewing the auto-filled details, and sending the final record to Google Sheets through Apps Script.
 
 ## What it does
 
-1. User scans a QR code.
-2. QR contains student details as JSON.
-3. Form is auto-filled from the QR data.
+1. User signs in with the frontend login screen.
+2. User scans a QR code.
+3. Student details are auto-filled from the QR data.
 4. User confirms the details.
-5. Backend saves the record as a new row in `student_scans.xlsx`.
-6. Admin can view recent records and download the Excel file.
+5. The app sends the record to Google Sheets.
+6. User can open the target Google Sheet directly from the UI.
 
 ## Required QR data format
 
@@ -42,16 +42,27 @@ Optional fields:
 
 Date, time, timestamp and scan reference are generated automatically by the system.
 
+## Required environment variables
+
+Create a `.env` file with:
+
+```bash
+VITE_LOGIN_USERNAME=admin
+VITE_LOGIN_PASSWORD=supersecret
+VITE_APPS_SCRIPT_URL=https://script.google.com/macros/s/your-deployment/exec
+VITE_GOOGLE_SHEET_URL=https://docs.google.com/spreadsheets/d/your-sheet-id/edit
+```
+
 ## Install
 
 ```bash
-npm install
+pnpm install
 ```
 
-## Run frontend and backend together
+## Run frontend
 
 ```bash
-npm run dev:all
+pnpm run dev
 ```
 
 Frontend:
@@ -60,35 +71,13 @@ Frontend:
 http://localhost:5173
 ```
 
-Backend:
-
-```text
-http://localhost:5000
-```
-
-## Run separately
-
-Terminal 1:
+## Build for Vercel
 
 ```bash
-npm run server
+pnpm build
 ```
 
-Terminal 2:
-
-```bash
-npm run dev
-```
-
-## Excel file location
-
-After the first successful save, the Excel file will be created here:
-
-```text
-backend/data/student_scans.xlsx
-```
-
-You can also download it from the UI using the Download Excel button.
+Vercel will use the `build` script from [package.json](/C:/Users/nuwan/Videos/qr-scanner/package.json) and the `packageManager` field is already pinned to `pnpm`.
 
 ## Important camera note
 

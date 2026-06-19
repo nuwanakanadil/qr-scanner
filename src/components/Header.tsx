@@ -1,7 +1,11 @@
-import { ExternalLink, GraduationCap, QrCode } from 'lucide-react';
+import { ExternalLink, GraduationCap, LogOut, QrCode } from 'lucide-react';
 import { openGoogleSheet } from '../api';
 
-export function Header() {
+interface HeaderProps {
+  onLogout: () => void;
+}
+
+export function Header({ onLogout }: HeaderProps) {
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
@@ -23,15 +27,26 @@ export function Header() {
           </div>
         </div>
 
-        <button
-          onClick={openGoogleSheet}
-          type="button"
-          className="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-slate-800"
-        >
-          <ExternalLink className="h-4 w-4" />
-          <span className="hidden sm:inline">Open Google Sheet</span>
-          <span className="sm:hidden">Sheet</span>
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={openGoogleSheet}
+            type="button"
+            className="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-slate-800"
+          >
+            <ExternalLink className="h-4 w-4" />
+            <span className="hidden sm:inline">Open Google Sheet</span>
+            <span className="sm:hidden">Sheet</span>
+          </button>
+
+          <button
+            onClick={onLogout}
+            type="button"
+            className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-50"
+          >
+            <LogOut className="h-4 w-4" />
+            <span>Logout</span>
+          </button>
+        </div>
       </div>
     </header>
   );

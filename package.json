@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "vite",
     "server": "node backend/server.js",
-    "dev:all": "concurrently \"npm run server\" \"npm run dev\"",
+    "dev:all": "concurrently \"pnpm run server\" \"pnpm run dev\"",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
